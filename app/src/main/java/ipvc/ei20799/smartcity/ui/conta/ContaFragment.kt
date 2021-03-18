@@ -1,4 +1,4 @@
-package ipvc.ei20799.smartcity.ui.dashboard
+package ipvc.ei20799.smartcity.ui.conta
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ipvc.ei20799.smartcity.R
 
-class DashboardFragment : Fragment() {
+class ContaFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var contaViewModel: ContaViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        contaViewModel =
+                ViewModelProvider(this).get(ContaViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_conta, container, false)
+        val textView: TextView = root.findViewById(R.id.text_notifications)
+        contaViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

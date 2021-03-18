@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ipvc.ei20799.smartcity.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_notas"
+        android:name="ipvc.ei20799.smartcity.ui.notas.NotasFragment"
         android:label="@string/title_notas"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_notas" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ipvc.ei20799.smartcity.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_conta"
+        android:name="ipvc.ei20799.smartcity.ui.conta.ContaFragment"
         android:label="@string/title_conta"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_conta" />
 </navigation>

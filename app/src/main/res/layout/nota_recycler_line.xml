@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/nota_line_titulo"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:text="Teste titulo nota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </TextView>
+
+    <TextView
+        android:id="@+id/nota_line_texto"
+        android:layout_below="@id/nota_line_titulo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/teste_nota"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        tools:ignore="MissingConstraints">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_margin="5dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_delete_black"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/nota_line_texto"/>
+
+    <ImageView
+        android:id="@+id/edit"
+        android:layout_margin="5dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_edit_black"
+        android:layout_below="@id/nota_line_texto"
+        android:layout_toLeftOf="@id/delete"/>
+</RelativeLayout>

@@ -22,6 +22,8 @@ import ipvc.ei20799.smartcity.viewmodel.NotaViewModel
 import ipvc.ei20799.smartcity.viewmodel.NotaViewModelFactory
 import kotlinx.android.synthetic.main.fragment_notas.*
 import kotlinx.android.synthetic.main.fragment_notas.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NotasFragment : Fragment() {
 
@@ -74,6 +76,7 @@ class NotasFragment : Fragment() {
             val ntitulo = data?.getStringExtra(NovaNota.EXTRA_REPLY_TITULO)
             val ndescricao = data?.getStringExtra(NovaNota.EXTRA_REPLY_DESCRICAO)
             val ndata = data?.getStringExtra(NovaNota.EXTRA_REPLY_DATA)
+            val dataFromString = Date(ndata)
 
             if (ntitulo!= null && ndescricao != null && ndata != null) {
                 val nota = Nota(titulo = ntitulo, texto = ndescricao, data = ndata)

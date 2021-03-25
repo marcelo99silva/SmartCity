@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.notas.NovaNota"
+    android:layout_marginHorizontal="20sp"
+    android:layout_marginVertical="20sp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/newNoteTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/criarNotaTitle"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="10sp"/>
+
+        <EditText
+            android:id="@+id/EditTextTituloNota"
+            android:textSize="20sp"
+            android:layout_below="@+id/newNoteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/EditText_title"
+            android:inputType="text" />
+
+        <EditText
+            android:background="@null"
+            android:id="@+id/EditTextDescricaoNota"
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:hint="@string/EditText_body"
+            android:layout_marginVertical="10sp"
+            android:layout_below="@+id/EditTextTituloNota" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/newNoteSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_save_black_36dp"/>
+
+        <TextView
+            android:id="@+id/newNoteDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="dd/mm/aaa hh:mm"
+            android:textSize="20sp"/>
+
+        <ImageButton
+            android:id="@+id/newNoteDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_delete_black_36dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

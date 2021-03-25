@@ -1,12 +1,15 @@
 package ipvc.ei20799.smartcity
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import ipvc.ei20799.smartcity.ui.notas.NovaNota
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,5 +25,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_notas, R.id.navigation_conta))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun clickCriarNota(){
+        val intent = Intent(this, NovaNota::class.java)
+        startActivity(intent)
     }
 }

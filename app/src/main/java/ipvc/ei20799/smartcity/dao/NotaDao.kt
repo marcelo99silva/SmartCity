@@ -15,8 +15,11 @@ interface NotaDao {
     @Query(value = "SELECT * FROM nota_table ORDER BY id DESC")
     fun getNotas(): LiveData<List<Nota>>
 
-    @Query("DELETE FROM nota_table WHERE id = :notaId")
-    fun deleteNotaById(notaId: Int)
+    @Query("DELETE FROM nota_table WHERE id == :notaId")
+    suspend fun deleteNotaById(notaId: Int)
+
+    @Query("UPDATE nota_table SET titulo = :nTitulo, texto = :nDescricao, data = :nData WHERE id == :id")
+    suspend fun updateNotaById(id: Int, nTitulo: String, nDescricao: String, nData: String)
 
     @Query("DELETE FROM nota_table")
     fun deleteAll()

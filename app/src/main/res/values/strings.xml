@@ -8,4 +8,8 @@
     <string name="EditText_body">Descrição</string>
     <string name="criarNotaTitle">Criar Nota</string>
     <string name="empty_not_saved">Preencha todos os campos.</string>
+    <string name="deleteNote">Nota apagada.</string>
+    <string name="confirmationDelete">De certeza que pretende Eliminar?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
 </resources>

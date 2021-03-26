@@ -26,7 +26,7 @@ class NovaNota : AppCompatActivity() {
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-        val sdf = SimpleDateFormat("dd/mm/yyyy k:mm")
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
         val currentDate = sdf.format(Date())
         val textView: TextView = newNoteDate as TextView
         textView.text = currentDate

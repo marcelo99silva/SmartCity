@@ -26,6 +26,10 @@ class NotaViewModel (private val repository: NotaRepository) : ViewModel() {
     fun deleteNotaById(notaId: Int) = viewModelScope.launch {
         repository.deleteNotaById(notaId)
     }
+
+    fun updateNotaById(id: Int, nTitulo: String, nDescricao: String, nData: String) = viewModelScope.launch {
+        repository.updateNotaById(id, nTitulo, nDescricao, nData)
+    }
 }
 
 class NotaViewModelFactory(private val repository: NotaRepository) : ViewModelProvider.Factory {

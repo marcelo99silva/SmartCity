@@ -10,4 +10,7 @@
     <string name="criarNotaTitle">New Note</string>
     <string name="empty_not_saved">Fill in all fields.</string>
     <string name="deleteNote">Note deleted.</string>
+    <string name="confirmationDelete">Are you sure you want to Delete?</string>
+    <string name="sim">Yes</string>
+    <string name="nao">No</string>
 </resources>

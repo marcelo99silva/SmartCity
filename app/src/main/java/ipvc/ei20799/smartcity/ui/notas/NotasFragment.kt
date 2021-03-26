@@ -59,6 +59,7 @@ class NotasFragment : Fragment() {
             //(activity as MainActivity).clickCriarNota()
             val intent = Intent(requireContext(), NovaNota::class.java)
             startActivityForResult(intent, newNotaActivityRequestCode)
+            //startActivity(intent)
         }
 
         return root

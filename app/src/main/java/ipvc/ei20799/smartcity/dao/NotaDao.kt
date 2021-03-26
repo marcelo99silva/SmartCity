@@ -18,6 +18,9 @@ interface NotaDao {
     @Query("DELETE FROM nota_table WHERE id == :notaId")
     suspend fun deleteNotaById(notaId: Int)
 
+    @Query("UPDATE nota_table SET titulo = :nTitulo, texto = :nDescricao, data = :nData WHERE id == :id")
+    suspend fun updateNotaById(id: Int, nTitulo: String, nDescricao: String, nData: String)
+
     @Query("DELETE FROM nota_table")
     fun deleteAll()
 }

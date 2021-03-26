@@ -12,11 +12,11 @@ interface NotaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(nota: Nota)
 
-    @Query(value = "SELECT * FROM nota_table ORDER BY data")
+    @Query(value = "SELECT * FROM nota_table ORDER BY id DESC")
     fun getNotas(): LiveData<List<Nota>>
 
-    @Query("DELETE FROM nota_table WHERE id = :notaId")
-    fun deleteNotaById(notaId: Int)
+    @Query("DELETE FROM nota_table WHERE id == :notaId")
+    suspend fun deleteNotaById(notaId: Int)
 
     @Query("DELETE FROM nota_table")
     fun deleteAll()

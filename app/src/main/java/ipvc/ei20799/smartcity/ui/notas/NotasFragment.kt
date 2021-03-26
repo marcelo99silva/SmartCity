@@ -1,7 +1,6 @@
 package ipvc.ei20799.smartcity.ui.notas
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ipvc.ei20799.smartcity.MainActivity
 import ipvc.ei20799.smartcity.NotasApplication
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.adapter.NotaAdapter
 import ipvc.ei20799.smartcity.dataclasses.Nota
 import ipvc.ei20799.smartcity.viewmodel.NotaViewModel
 import ipvc.ei20799.smartcity.viewmodel.NotaViewModelFactory
-import kotlinx.android.synthetic.main.fragment_notas.*
 import kotlinx.android.synthetic.main.fragment_notas.view.*
+import kotlin.collections.ArrayList
 
 class NotasFragment : Fragment() {
 
@@ -45,7 +42,7 @@ class NotasFragment : Fragment() {
         }*/
 
         val recyclerView: RecyclerView = root.recyclerNotas
-        val adapter = NotaAdapter(requireContext())
+        val adapter = NotaAdapter(notaViewModel)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
 
@@ -74,6 +71,9 @@ class NotasFragment : Fragment() {
             val ntitulo = data?.getStringExtra(NovaNota.EXTRA_REPLY_TITULO)
             val ndescricao = data?.getStringExtra(NovaNota.EXTRA_REPLY_DESCRICAO)
             val ndata = data?.getStringExtra(NovaNota.EXTRA_REPLY_DATA)
+
+            // val sdf = SimpleDateFormat("dd/mm/yyyy k:mm")
+            // val currentDate = sdf.format(Date())
 
             if (ntitulo!= null && ndescricao != null && ndata != null) {
                 val nota = Nota(titulo = ntitulo, texto = ndescricao, data = ndata)

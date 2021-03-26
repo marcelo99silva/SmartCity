@@ -9,4 +9,5 @@
     <string name="EditText_body">Description</string>
     <string name="criarNotaTitle">New Note</string>
     <string name="empty_not_saved">Fill in all fields.</string>
+    <string name="deleteNote">Note deleted.</string>
 </resources>

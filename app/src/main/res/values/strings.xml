@@ -12,4 +12,9 @@
     <string name="confirmationDelete">De certeza que pretende Eliminar?</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="title_login">Login</string>
+    <string name="loginMsg">Faça login para ter acesso ao resto da aplicação.</string>
+    <string name="title_activity_main_login">MainActivityLogin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

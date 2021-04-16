@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ipvc.ei20799.smartcity">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".NotasApplication"
         android:allowBackup="true"
@@ -10,16 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCity">
-        <activity android:name=".ui.notas.OpenNoteActivity"></activity>
-        <activity android:name=".ui.notas.NovaNota"></activity>
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".MainActivityLogin"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.notas.OpenNoteActivity" />
+        <activity android:name=".ui.notas.NovaNota" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
         </activity>
     </application>
 

@@ -1,15 +1,13 @@
-package ipvc.ei20799.smartcity
+package ipvc.ei20799.smartcity.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import ipvc.ei20799.smartcity.ui.notas.NovaNota
+import ipvc.ei20799.smartcity.R
 
 class MainActivity : AppCompatActivity() {
 

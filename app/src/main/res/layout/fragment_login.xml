@@ -95,7 +95,15 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/passwordTV"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_account_black_24dp" />
+                android:src="@drawable/ic_baseline_lock_24" />
+
+            <CheckBox
+                android:id="@+id/loginCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordET"
+                android:layout_alignLeft="@id/passwordET"
+                android:text="@string/loginCheckbox"/>
         </RelativeLayout>
 
         <RelativeLayout

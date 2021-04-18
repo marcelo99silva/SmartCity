@@ -15,6 +15,6 @@
     <string name="title_login">Login</string>
     <string name="loginMsg">Faça login para ter acesso ao resto da aplicação.</string>
     <string name="title_activity_main_login">MainActivityLogin</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_error">Credenciais erradas.</string>
+    <string name="loginCheckbox">Manter sessão iniciada</string>
 </resources>

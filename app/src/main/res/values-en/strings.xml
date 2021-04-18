@@ -16,4 +16,6 @@
     <string name="title_login">Login</string>
     <string name="loginMsg">Login to access the rest of the app.</string>
     <string name="title_activity_main_login">MainActivityLogin</string>
+    <string name="login_error">Invalid username or password.</string>
+    <string name="loginCheckbox">Remember me</string>
 </resources>

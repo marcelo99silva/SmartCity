@@ -17,4 +17,5 @@
     <string name="title_activity_main_login">MainActivityLogin</string>
     <string name="login_error">Credenciais erradas.</string>
     <string name="loginCheckbox">Manter sessão iniciada</string>
+    <string name="title_maps">Mapa</string>
 </resources>

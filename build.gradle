@@ -26,7 +26,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    roomVersion = '2.2.5'
+    roomVersion = '2.2.6'
     activityVersion = '1.1.0'
     appCompatVersion = '1.2.0'
     constraintLayoutVersion = '2.0.2'

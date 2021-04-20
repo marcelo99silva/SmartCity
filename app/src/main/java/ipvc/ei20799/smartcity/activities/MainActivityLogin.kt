@@ -17,7 +17,7 @@ class MainActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // check shared pref
-        // if  login intent mapactivity
+        // if  login intent mainactivity
         if(SharedPrefManager.getInstance(this).isLoggedIn){
             val intent = Intent(applicationContext, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

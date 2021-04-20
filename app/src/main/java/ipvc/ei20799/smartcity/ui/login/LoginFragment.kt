@@ -61,6 +61,9 @@ class LoginFragment : Fragment() {
                             if(loginCheckBox.isChecked){
                                 SharedPrefManager.getInstance(requireContext()).saveUser(response.body()!!.user)
                             }
+                            else{
+                                SharedPrefManager.getInstance(requireContext()).saveId(response.body()!!.user.id)
+                            }
                             val intent = Intent(requireContext(), MainActivity::class.java).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -1,15 +1,20 @@
 package ipvc.ei20799.smartcity.dataclasses
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 data class Report (
     val id: String,
-    val idUser: String,
-    val idType: String,
+    val user_id: String,
+    val type_id: String,
     val title: String,
     val description: String,
     val time: String,
     val image: String,
     val latitude: BigDecimal,
     val longitude: BigDecimal
+) : Serializable
+
+data class UpdateReport (
+    val error: Boolean
 )

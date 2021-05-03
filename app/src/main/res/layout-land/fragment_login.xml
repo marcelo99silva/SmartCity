@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.login.LoginFragment"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,11 +18,11 @@
 
             <RelativeLayout
                 android:id="@+id/loginLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="35sp"
-                android:paddingTop="60sp"
-                android:paddingBottom="50sp">
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp">
 
                 <TextView
                     android:id="@+id/loginTitle"
@@ -44,7 +44,9 @@
                 android:id="@+id/emailLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/loginLayout">
+                android:layout_toEndOf="@id/loginLayout"
+                android:layout_marginEnd="100dp"
+                android:layout_marginTop="20sp">
 
                 <TextView
                     android:id="@+id/emailTV"
@@ -75,7 +77,9 @@
                 android:id="@+id/passwordLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/emailLayout">
+                android:layout_below="@id/emailLayout"
+                android:layout_toEndOf="@id/loginLayout"
+                android:layout_marginEnd="100dp" >
 
                 <TextView
                     android:id="@+id/passwordTV"

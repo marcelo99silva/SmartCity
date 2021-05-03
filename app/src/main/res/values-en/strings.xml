@@ -19,4 +19,30 @@
     <string name="login_error">Invalid username or password.</string>
     <string name="loginCheckbox">Remember me</string>
     <string name="title_maps">Map</string>
+    <string name="newReport">Create report</string>
+    <string name="onlyWork">Show only roadwork</string>
+    <string name="criarReportTitle">New report</string>
+    <string name="tipoReport">Report type:</string>
+    <string name="deleteReport">Report deleted.</string>
+    <string name="createdReport">Report accepted.</string>
+    <string name="tirarFoto">Camera</string>
+    <string name="escolherFoto">Gallery</string>
+    <string name="erro">An error has occureed.</string>
+    <string name="noPermission">Permission not granted.</string>
+    <string name="tipoTodos">All</string>
+    <string name="tipoAcidentes">Accidents</string>
+    <string name="tipoObras">Roadwork</string>
+    <string name="ReportTitle">Report</string>
+    <string name="saberMais">See more</string>
+    <string name="loading">Loading...</string>
+    <string name="updatedReport">Report updated.</string>
+    <string name="distancia">Distance in meters.</string>
+    <string name="distanciaSo">Distance</string>
+    <string name="filtroDistancia">FIlter reports by distance</string>
+    <string name="removerFiltro">Remove filter</string>
+    <string name="apply">Apply</string>
+    <string-array name="tipos">
+        <item>Accident</item>
+        <item>Roadwork</item>
+    </string-array>
 </resources>

@@ -39,9 +39,9 @@ class LoginFragment : Fragment() {
 
         root.loginBt.setOnClickListener{
             val email = emailET.text.toString().trim()
-            val pass = passwordET.text.toString().trim()
+            val password = passwordET.text.toString().trim()
 
-            if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
+            if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                 Toast.makeText(
                     requireContext(),
                     R.string.empty_not_saved,
@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
             }
             else{
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
-                val call = request.userLogin(email, pass)
+                val call = request.userLogin(email, password)
 
                 call.enqueue(object : Callback<LoginResponse> {
                     override fun onResponse(

@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceBuilder {
     private val webHost = "http://smartcityapi.000webhostapp.com/"
-    private val localHost = "http://192.168.1.106/cm/SmartCityWebApi/"
+    private val localHost = "http://192.168.56.1/cm/SmartCityWebApi/"
 
     private val client = OkHttpClient.Builder().build()
 

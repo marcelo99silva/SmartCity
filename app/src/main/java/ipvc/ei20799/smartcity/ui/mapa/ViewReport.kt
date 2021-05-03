@@ -4,8 +4,10 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
+import android.view.MotionEvent
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.dataclasses.Report
+import kotlinx.android.synthetic.main.activity_new_report.*
 import kotlinx.android.synthetic.main.activity_view_report.*
 
 class ViewReport : AppCompatActivity() {
@@ -23,5 +25,13 @@ class ViewReport : AppCompatActivity() {
         ViewDescricaoReport.text = report.description
         viewImage.setImageBitmap(decodedByte)
         ViewReportDate.text = report.time
+
+        ViewDescricaoReport.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
     }
 }

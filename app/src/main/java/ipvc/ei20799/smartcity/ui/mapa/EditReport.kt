@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Base64
+import android.view.MotionEvent
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
@@ -55,6 +56,14 @@ class EditReport : AppCompatActivity() {
         EditDescricaoReport.setText(report.description)
         editImage.setImageBitmap(decodedByte)
         editReportDate.text = report.time
+
+        EditDescricaoReport.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
 
         editTirarFoto.setOnClickListener {
             val tirarPhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -167,9 +176,9 @@ class EditReport : AppCompatActivity() {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
             val encodedImage = android.util.Base64.encodeToString(byteArrayOutputStream.toByteArray(), android.util.Base64.DEFAULT)
 
-            if ( typeString == "Acidente"){
+            if ( typeString == "Acidente" || typeString == "Accident"){
                 type_id = 1
-            } else if (typeString == "Obras") {
+            } else if (typeString == "Obras" || typeString == "Accident") {
                 type_id = 2
             }
 

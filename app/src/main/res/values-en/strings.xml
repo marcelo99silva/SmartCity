@@ -41,4 +41,8 @@
     <string name="filtroDistancia">FIlter reports by distance</string>
     <string name="removerFiltro">Remove filter</string>
     <string name="apply">Apply</string>
+    <string-array name="tipos">
+        <item>Accident</item>
+        <item>Roadwork</item>
+    </string-array>
 </resources>

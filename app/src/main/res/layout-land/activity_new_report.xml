@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mapa.NewReport"
-    android:layout_marginVertical="20sp"
     android:orientation="vertical">
 
     <ScrollView
@@ -16,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp" >
+            android:layout_marginHorizontal="50sp" >
             <TextView
                 android:id="@+id/newReportTitle"
                 android:layout_centerHorizontal="true"
@@ -43,19 +42,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tipoReport"
                 android:layout_below="@id/EditTextTituloReport"
-                android:layout_marginVertical="5sp"/>
+                android:layout_marginVertical="5sp"
+                android:layout_marginEnd="100dp"/>
 
             <Spinner
                 android:id="@+id/SpinnerNewReport"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/TextTipoReport"/>
+                android:layout_below="@id/EditTextTituloReport"
+                android:layout_toEndOf="@id/TextTipoReport"/>
 
             <EditText
                 android:background="@null"
                 android:id="@+id/EditTextDescricaoReport"
                 android:layout_width="match_parent"
-                android:layout_height="180sp"
+                android:layout_height="70sp"
                 android:inputType="textMultiLine"
                 android:gravity="top"
                 android:hint="@string/EditText_body"
@@ -66,21 +67,26 @@
                 android:scrollbars="vertical" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/EditTextDescricaoReport">
+                android:layout_below="@id/EditTextDescricaoReport"
+                android:layout_marginBottom="10sp"
+                android:layout_centerHorizontal="true" >
+
                 <ImageView
                     android:id="@+id/ivImage"
-                    android:layout_width="match_parent"
+                    android:layout_width="330sp"
                     android:layout_height="180sp"
-                    android:scaleType="centerCrop"
                     android:layout_marginHorizontal="50sp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_baseline_insert_photo_24" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ivImage"
-                    android:layout_centerHorizontal="true">
+                    android:layout_toEndOf="@id/ivImage"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"  >
                     <Button
                         android:id="@+id/bTirarFoto"
                         android:layout_width="wrap_content"

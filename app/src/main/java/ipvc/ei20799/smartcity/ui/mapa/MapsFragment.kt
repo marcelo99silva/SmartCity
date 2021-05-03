@@ -133,41 +133,7 @@ class MapsFragment : Fragment() {
             ) {
                 if (response.body() != null) {
                     reports = response.body()!!
-                    populateMap(distancia, 0)
-                    /*var positionR: LatLng
-                    var marker: Marker
-                    for (report in reports) {
-                        positionR = LatLng(
-                            report.latitude.toDouble(),
-                            report.longitude.toDouble()
-                        )
-                        // se report for do user logado, marker azul
-                        if (userId == report.user_id.toInt()) {
-                            marker = map.addMarker(
-                                MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                    .position(positionR)
-                                    .title(report.title)
-                                    .snippet(report.user_id)
-                            )
-                        }
-                        // se report for obras, marker laranja
-                        else if (report.type_id.toInt() == 2) {
-                            marker = map.addMarker(
-                                MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                    .position(positionR)
-                                    .title(report.title)
-                                    .snippet(report.user_id)
-                            )
-                        } else {
-                            marker = map.addMarker(
-                                MarkerOptions().position(positionR).title(report.title)
-                                    .snippet(report.user_id)
-                            )
-                        }
-                        marker.tag = report
-                    }*/
+                    populateMap(distancia, tipo)
                 }
             }
 
@@ -224,85 +190,15 @@ class MapsFragment : Fragment() {
                         R.id.radioButton1 -> {
                             tipo = 0
                             populateMap(distancia, 0)
-                            /*map.clear()
-                            var marker: Marker
-                            for (report in reports) {
-                                val positionR: LatLng = LatLng(report.latitude.toDouble(),
-                                        report.longitude.toDouble())
-                                // se report for do user logado, marker azul
-                                if ( userId == report.user_id.toInt()) {
-                                    marker = map.addMarker(
-                                            MarkerOptions()
-                                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                    .position(positionR)
-                                                    .title(report.title)
-                                                    .snippet(report.user_id))
-                                }
-                                // se report for obras, marker laranja
-                                else if (report.type_id.toInt() == 2) {
-                                    marker = map.addMarker(
-                                            MarkerOptions()
-                                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                                    .position(positionR)
-                                                    .title(report.title)
-                                                    .snippet(report.user_id))
-                                } else {
-                                    marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
-                                }
-                                marker.tag = report
-                            }*/
                         }
                         R.id.radioButton2 -> {
                             tipo = 1
                             populateMap(distancia, 1)
-                            /*map.clear()
-                            var marker: Marker
-                            for (report in reports){
-                                val positionR: LatLng = LatLng(report.latitude.toDouble(),
-                                        report.longitude.toDouble())
-                                if (report.type_id.toInt() == 1){
-                                    if( userId == report.user_id.toInt() ){
-                                        marker = map.addMarker(
-                                                MarkerOptions()
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                        .position(positionR)
-                                                        .title(report.title)
-                                                        .snippet(report.user_id))
-                                    } else {
-                                        marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
-                                    }
-                                    marker.tag = report
-                                }
-                            }*/
                         }
                         R.id.radioButton3 -> {
                             tipo = 2
 
                             populateMap(distancia, 2)
-                            /*map.clear()
-                            var marker: Marker
-                            for (report in reports){
-                                val positionR: LatLng = LatLng(report.latitude.toDouble(),
-                                        report.longitude.toDouble())
-                                if (report.type_id.toInt() == 2) {
-                                    if( userId == report.user_id.toInt() ){
-                                        marker = map.addMarker(
-                                                MarkerOptions()
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                        .position(positionR)
-                                                        .title(report.title)
-                                                        .snippet(report.user_id))
-                                    } else {
-                                        marker = map.addMarker(
-                                                MarkerOptions()
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                                        .position(positionR)
-                                                        .title(report.title)
-                                                        .snippet(report.user_id))
-                                    }
-                                    marker.tag = report
-                                }
-                            }*/
                         }
                     }
                 }
@@ -337,7 +233,6 @@ class MapsFragment : Fragment() {
     }
 
     private fun filtrarDistancia(distancia: Int): MutableList<Report> {
-        Toast.makeText(requireContext(), distancia.toString(), Toast.LENGTH_SHORT).show()
         val reportsInserir = emptyList<Report>().toMutableList()
         for(report in reports){
             val distToReport = calculateDistance(lastLocation.latitude, lastLocation.longitude, report.latitude.toDouble(), report.longitude.toDouble())
@@ -501,45 +396,6 @@ class MapsFragment : Fragment() {
                 }
             }
         }
-
-
-        /*var positionR: LatLng
-        var marker: Marker
-        for(report in reportsDentroDistancia){
-            val distToReport = calculateDistance(lastLocation.latitude, lastLocation.longitude, report.latitude.toDouble(), report.longitude.toDouble())
-            if ( distToReport <= distancia.toFloat() ) {
-                positionR = LatLng(
-                        report.latitude.toDouble(),
-                        report.longitude.toDouble()
-                )
-                // se report for do user logado, marker azul
-                if (userId == report.user_id.toInt()) {
-                    marker = map.addMarker(
-                            MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                    .position(positionR)
-                                    .title(report.title)
-                                    .snippet(report.user_id)
-                    )
-                }
-                // se report for obras, marker laranja
-                else if (report.type_id.toInt() == 2) {
-                    marker = map.addMarker(
-                            MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                    .position(positionR)
-                                    .title(report.title)
-                                    .snippet(report.user_id)
-                    )
-                } else {
-                    marker = map.addMarker(
-                            MarkerOptions().position(positionR).title(report.title)
-                                    .snippet(report.user_id)
-                    )
-                }
-                marker.tag = report
-            }
-        }*/
     }
 
     private fun calculateDistance(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Float {
@@ -556,11 +412,12 @@ class MapsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
-        if (!first) {
+        /*if (!first) {
             map.clear()
         }
         loadReports()
-        radiosFiltros.check(radioButton1.id)
+        radiosFiltros.check(radioButton1.id)*/
+        loadReports()
     }
 
     private fun startLocationUpdates() {

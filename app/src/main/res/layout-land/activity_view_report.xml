@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mapa.ViewReport"
-    android:layout_marginVertical="20sp"
     android:orientation="vertical">
 
     <ScrollView
@@ -16,8 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp" >
-
+            android:layout_marginHorizontal="50sp" >
             <TextView
                 android:id="@+id/newReportTitle"
                 android:layout_centerHorizontal="true"
@@ -43,21 +41,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tipoReport"
                 android:layout_below="@id/ViewTituloReport"
-                android:layout_marginVertical="5sp"/>
+                android:layout_marginVertical="5sp"
+                android:layout_marginEnd="100dp"/>
 
             <TextView
                 android:id="@+id/ViewTipoReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:layout_below="@id/TextTipoReport"
+                android:layout_below="@id/ViewTituloReport"
+                android:layout_toEndOf="@id/TextTipoReport"
                 android:text="@string/loading"/>
 
             <TextView
                 android:background="@null"
                 android:id="@+id/ViewDescricaoReport"
                 android:layout_width="match_parent"
-                android:layout_height="180sp"
+                android:layout_height="70sp"
                 android:gravity="top"
                 android:hint="@string/EditText_body"
                 android:layout_marginVertical="10sp"
@@ -68,13 +68,13 @@
 
             <ImageView
                 android:id="@+id/viewImage"
-                android:layout_width="match_parent"
-                android:layout_height="180sp"
-                android:scaleType="centerCrop"
+                android:layout_width="330sp"
+                android:layout_height="250sp"
+                android:layout_below="@id/ViewDescricaoReport"
                 android:layout_marginHorizontal="50sp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_baseline_insert_photo_24"
-                android:layout_below="@id/ViewDescricaoReport" />
-
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </ScrollView>
 

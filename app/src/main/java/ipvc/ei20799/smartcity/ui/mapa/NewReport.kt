@@ -41,8 +41,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val CODE_TIRAR_FOTO = 1
-private val CODE_ESCOLHER_FOTO = 2;
-private val CODE_PERMISSION = 3;
+private const val CODE_ESCOLHER_FOTO = 2;
+private const val CODE_PERMISSION = 3;
 
 class NewReport : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -200,7 +200,7 @@ class NewReport : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
             CODE_PERMISSION -> {
-                if(grantResults.size >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     escolherImagem()
                 } else{
                     Toast.makeText(this, R.string.noPermission, Toast.LENGTH_SHORT).show()

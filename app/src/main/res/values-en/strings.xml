@@ -32,4 +32,8 @@
     <string name="tipoTodos">All</string>
     <string name="tipoAcidentes">Accidents</string>
     <string name="tipoObras">Roadwork</string>
+    <string name="ReportTitle">Report</string>
+    <string name="saberMais">See more</string>
+    <string name="loading">Loading...</string>
+    <string name="updatedReport">Report updated.</string>
 </resources>

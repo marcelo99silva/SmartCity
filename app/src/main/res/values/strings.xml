@@ -23,10 +23,6 @@
     <string name="criarReportTitle">Reportar situação</string>
     <string name="tipoReport">Tipo situação:</string>
 
-    <string-array name="tipos">
-        <item>Acidente</item>
-        <item>Obras</item>
-    </string-array>
     <string name="deleteReport">Situação apagada.</string>
     <string name="createdReport">Situação reportada.</string>
     <string name="tirarFoto">Câmera</string>
@@ -36,4 +32,12 @@
     <string name="tipoTodos">Todos</string>
     <string name="tipoAcidentes">Acidentes</string>
     <string name="tipoObras">Obras</string>
+    <string name="saberMais">Ver mais</string>
+    <string name="ReportTitle">Situação</string>
+    <string name="loading">A carregar...</string>
+    <string name="updatedReport">Situação atualizada.</string>
+    <string-array name="tipos">
+        <item>Acidente</item>
+        <item>Obras</item>
+    </string-array>
 </resources>

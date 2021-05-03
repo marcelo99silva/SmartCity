@@ -1,5 +1,6 @@
 package ipvc.ei20799.smartcity.dataclasses
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 data class Report (
@@ -12,4 +13,8 @@ data class Report (
     val image: String,
     val latitude: BigDecimal,
     val longitude: BigDecimal
+) : Serializable
+
+data class UpdateReport (
+    val error: Boolean
 )

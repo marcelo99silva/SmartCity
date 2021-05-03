@@ -24,9 +24,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.activities.MainActivity
+import ipvc.ei20799.smartcity.adapter.CustomInfoWindowAdapter
 import ipvc.ei20799.smartcity.api.EndPoints
 import ipvc.ei20799.smartcity.api.ServiceBuilder
 import ipvc.ei20799.smartcity.dataclasses.LoginResponse
@@ -38,8 +40,10 @@ import kotlinx.android.synthetic.main.fragment_maps.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 class MapsFragment : Fragment() {
+    private var userId: Int = 0
     private lateinit var reports: List<Report>
     private lateinit var map: GoogleMap
     // variaveis para pedido de ultima localização
@@ -52,6 +56,7 @@ class MapsFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
+        //map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -70,6 +75,20 @@ class MapsFragment : Fragment() {
 
         //método 2 Request Location Update
         createLocationRequest()
+
+        map.setOnMarkerClickListener { marker ->
+            if(marker.snippet.toInt() == userId) {
+                val intent = Intent(requireContext(), EditReport::class.java)
+                intent.putExtra("report", marker.tag as Serializable)
+                startActivity(intent)
+
+            }else{
+                val intent = Intent(requireContext(), ViewReport::class.java)
+                intent.putExtra("report", marker.tag as Serializable)
+                startActivity(intent)
+            }
+            true
+        }
     }
 
     private fun createLocationRequest() {
@@ -100,30 +119,44 @@ class MapsFragment : Fragment() {
 
         call.enqueue(object : Callback<List<Report>> {
             override fun onResponse(
-                    call: Call<List<Report>>,
-                    response: Response<List<Report>>
+                call: Call<List<Report>>,
+                response: Response<List<Report>>
             ) {
-                reports = response.body()!!
-                var positionR: LatLng
-                for (report in reports){
-                    positionR = LatLng(report.latitude.toDouble(),
-                            report.longitude.toDouble())
-                    // se report for do user logado, marker azul
-                    if( SharedPrefManager.getInstance(requireContext()).user.id.toInt() == report.user_id.toInt() ){
-                        map.addMarker(
+                if (response.body() != null) {
+                    reports = response.body()!!
+                    var positionR: LatLng
+                    var marker: Marker
+                    for (report in reports) {
+                        positionR = LatLng(
+                            report.latitude.toDouble(),
+                            report.longitude.toDouble()
+                        )
+                        // se report for do user logado, marker azul
+                        if (userId == report.user_id.toInt()) {
+                            marker = map.addMarker(
                                 MarkerOptions()
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                        .position(positionR).title(report.title))
-                    }
-                    // se report for obras, marker laranja
-                    else if (report.type_id.toInt() == 2){
-                        map.addMarker(
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                    .position(positionR)
+                                    .title(report.title)
+                                    .snippet(report.user_id)
+                            )
+                        }
+                        // se report for obras, marker laranja
+                        else if (report.type_id.toInt() == 2) {
+                            marker = map.addMarker(
                                 MarkerOptions()
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                        .position(positionR).title(report.title))
-                    }
-                    else{
-                        map.addMarker(MarkerOptions().position(positionR).title(report.title))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                    .position(positionR)
+                                    .title(report.title)
+                                    .snippet(report.user_id)
+                            )
+                        } else {
+                            marker = map.addMarker(
+                                MarkerOptions().position(positionR).title(report.title)
+                                    .snippet(report.user_id)
+                            )
+                        }
+                        marker.tag = report
                     }
                 }
             }
@@ -137,6 +170,7 @@ class MapsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        userId = SharedPrefManager.getInstance(requireContext()).user.id.toInt()
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -175,67 +209,81 @@ class MapsFragment : Fragment() {
 
         radiosFiltros.setOnCheckedChangeListener{ radioGroup, optionId ->
             run {
-                Toast.makeText(context, optionId, Toast.LENGTH_SHORT).show()
                 if( this::reports.isInitialized ) {
                     when (optionId) {
                         R.id.radioButton1 -> {
-                            Toast.makeText(context, "todos", Toast.LENGTH_SHORT).show()
                             map.clear()
+                            var marker: Marker
                             for (report in reports) {
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
                                         report.longitude.toDouble())
                                 // se report for do user logado, marker azul
-                                if (SharedPrefManager.getInstance(requireContext()).user.id.toInt() == report.user_id.toInt()) {
-                                    map.addMarker(
+                                if ( userId == report.user_id.toInt()) {
+                                    marker = map.addMarker(
                                             MarkerOptions()
                                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                    .position(positionR).title(report.title))
+                                                    .position(positionR)
+                                                    .title(report.title)
+                                                    .snippet(report.user_id))
                                 }
                                 // se report for obras, marker laranja
                                 else if (report.type_id.toInt() == 2) {
-                                    map.addMarker(
+                                    marker = map.addMarker(
                                             MarkerOptions()
                                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                                    .position(positionR).title(report.title))
+                                                    .position(positionR)
+                                                    .title(report.title)
+                                                    .snippet(report.user_id))
                                 } else {
-                                    map.addMarker(MarkerOptions().position(positionR).title(report.title))
+                                    marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
                                 }
+                                marker.tag = report
                             }
                         }
                         R.id.radioButton2 -> {
                             map.clear()
+                            var marker: Marker
                             for (report in reports){
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
                                         report.longitude.toDouble())
                                 if (report.type_id.toInt() == 1){
-                                    if( SharedPrefManager.getInstance(requireContext()).user.id.toInt() == report.user_id.toInt() ){
-                                        map.addMarker(
+                                    if( userId == report.user_id.toInt() ){
+                                        marker = map.addMarker(
                                                 MarkerOptions()
                                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                        .position(positionR).title(report.title))
+                                                        .position(positionR)
+                                                        .title(report.title)
+                                                        .snippet(report.user_id))
                                     } else {
-                                        map.addMarker(MarkerOptions().position(positionR).title(report.title))
+                                        marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
                                     }
+                                    marker.tag = report
                                 }
                             }
                         }
                         R.id.radioButton3 -> {
                             map.clear()
+                            var marker: Marker
                             for (report in reports){
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
                                         report.longitude.toDouble())
                                 if (report.type_id.toInt() == 2) {
-                                    if( SharedPrefManager.getInstance(requireContext()).user.id.toInt() == report.user_id.toInt() ){
-                                        map.addMarker(
+                                    if( userId == report.user_id.toInt() ){
+                                        marker = map.addMarker(
                                                 MarkerOptions()
                                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                                        .position(positionR).title(report.title))
+                                                        .position(positionR)
+                                                        .title(report.title)
+                                                        .snippet(report.user_id))
                                     } else {
-                                        map.addMarker(
+                                        marker = map.addMarker(
                                                 MarkerOptions()
                                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                                        .position(positionR).title(report.title))
+                                                        .position(positionR)
+                                                        .title(report.title)
+                                                        .snippet(report.user_id))
                                     }
+                                    marker.tag = report
                                 }
                             }
                         }

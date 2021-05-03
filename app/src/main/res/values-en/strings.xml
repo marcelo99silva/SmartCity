@@ -19,4 +19,17 @@
     <string name="login_error">Invalid username or password.</string>
     <string name="loginCheckbox">Remember me</string>
     <string name="title_maps">Map</string>
+    <string name="newReport">Create report</string>
+    <string name="onlyWork">Show only roadwork</string>
+    <string name="criarReportTitle">New report</string>
+    <string name="tipoReport">Report type:</string>
+    <string name="deleteReport">Report deleted.</string>
+    <string name="createdReport">Report accepted.</string>
+    <string name="tirarFoto">Camera</string>
+    <string name="escolherFoto">Gallery</string>
+    <string name="erro">An error has occureed.</string>
+    <string name="noPermission">Permission not granted.</string>
+    <string name="tipoTodos">All</string>
+    <string name="tipoAcidentes">Accidents</string>
+    <string name="tipoObras">Roadwork</string>
 </resources>

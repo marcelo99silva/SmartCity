@@ -18,4 +18,22 @@
     <string name="login_error">Credenciais erradas.</string>
     <string name="loginCheckbox">Manter sessão iniciada</string>
     <string name="title_maps">Mapa</string>
+    <string name="newReport">Reportar situação</string>
+    <string name="onlyWork">Mostrar só obras</string>
+    <string name="criarReportTitle">Reportar situação</string>
+    <string name="tipoReport">Tipo situação:</string>
+
+    <string-array name="tipos">
+        <item>Acidente</item>
+        <item>Obras</item>
+    </string-array>
+    <string name="deleteReport">Situação apagada.</string>
+    <string name="createdReport">Situação reportada.</string>
+    <string name="tirarFoto">Câmera</string>
+    <string name="escolherFoto">Galeria</string>
+    <string name="erro">Ocorreu um erro.</string>
+    <string name="noPermission">Permissão não concedida.</string>
+    <string name="tipoTodos">Todos</string>
+    <string name="tipoAcidentes">Acidentes</string>
+    <string name="tipoObras">Obras</string>
 </resources>

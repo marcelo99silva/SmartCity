@@ -4,8 +4,8 @@ import java.math.BigDecimal
 
 data class Report (
     val id: String,
-    val idUser: String,
-    val idType: String,
+    val user_id: String,
+    val type_id: String,
     val title: String,
     val description: String,
     val time: String,

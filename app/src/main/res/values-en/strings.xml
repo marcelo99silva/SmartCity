@@ -36,4 +36,9 @@
     <string name="saberMais">See more</string>
     <string name="loading">Loading...</string>
     <string name="updatedReport">Report updated.</string>
+    <string name="distancia">Distance in meters.</string>
+    <string name="distanciaSo">Distance</string>
+    <string name="filtroDistancia">FIlter reports by distance</string>
+    <string name="removerFiltro">Remove filter</string>
+    <string name="apply">Apply</string>
 </resources>

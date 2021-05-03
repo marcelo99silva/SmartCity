@@ -36,6 +36,11 @@
     <string name="ReportTitle">Situação</string>
     <string name="loading">A carregar...</string>
     <string name="updatedReport">Situação atualizada.</string>
+    <string name="distancia">Distância em metros</string>
+    <string name="distanciaSo">Distância</string>
+    <string name="filtroDistancia">Filtrar situações por distância</string>
+    <string name="removerFiltro">Remover filtro</string>
+    <string name="apply">Aplicar</string>
     <string-array name="tipos">
         <item>Acidente</item>
         <item>Obras</item>

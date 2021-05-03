@@ -1,6 +1,7 @@
 package ipvc.ei20799.smartcity.ui.mapa
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -8,14 +9,18 @@ import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity.apply
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,6 +31,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.activities.MainActivity
 import ipvc.ei20799.smartcity.adapter.CustomInfoWindowAdapter
@@ -41,6 +47,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
+import java.math.BigDecimal
 
 class MapsFragment : Fragment() {
     private var userId: Int = 0
@@ -53,6 +60,8 @@ class MapsFragment : Fragment() {
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     var first: Boolean = true
+    var distancia: Int = 0
+    var tipo: Int = 0
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -124,7 +133,8 @@ class MapsFragment : Fragment() {
             ) {
                 if (response.body() != null) {
                     reports = response.body()!!
-                    var positionR: LatLng
+                    populateMap(distancia, 0)
+                    /*var positionR: LatLng
                     var marker: Marker
                     for (report in reports) {
                         positionR = LatLng(
@@ -157,7 +167,7 @@ class MapsFragment : Fragment() {
                             )
                         }
                         marker.tag = report
-                    }
+                    }*/
                 }
             }
 
@@ -212,7 +222,9 @@ class MapsFragment : Fragment() {
                 if( this::reports.isInitialized ) {
                     when (optionId) {
                         R.id.radioButton1 -> {
-                            map.clear()
+                            tipo = 0
+                            populateMap(distancia, 0)
+                            /*map.clear()
                             var marker: Marker
                             for (report in reports) {
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
@@ -238,10 +250,12 @@ class MapsFragment : Fragment() {
                                     marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
                                 }
                                 marker.tag = report
-                            }
+                            }*/
                         }
                         R.id.radioButton2 -> {
-                            map.clear()
+                            tipo = 1
+                            populateMap(distancia, 1)
+                            /*map.clear()
                             var marker: Marker
                             for (report in reports){
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
@@ -259,10 +273,13 @@ class MapsFragment : Fragment() {
                                     }
                                     marker.tag = report
                                 }
-                            }
+                            }*/
                         }
                         R.id.radioButton3 -> {
-                            map.clear()
+                            tipo = 2
+
+                            populateMap(distancia, 2)
+                            /*map.clear()
                             var marker: Marker
                             for (report in reports){
                                 val positionR: LatLng = LatLng(report.latitude.toDouble(),
@@ -285,13 +302,250 @@ class MapsFragment : Fragment() {
                                     }
                                     marker.tag = report
                                 }
-                            }
+                            }*/
                         }
                     }
                 }
 
             }
         }
+
+        buttonDistancia.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.alert_dialog_distancia, null)
+            val numberPicker  = dialogLayout.findViewById<NumberPicker>(R.id.numberPickerDistancia)
+            numberPicker.minValue = 0
+            numberPicker.maxValue = 20000
+            numberPicker.wrapSelectorWheel = true
+            numberPicker.value = distancia
+            numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+                distancia = newVal
+            }
+            builder.setMessage(R.string.filtroDistancia)
+                    .setView(dialogLayout)
+                    .setPositiveButton(R.string.apply) { dialog, i ->
+                        populateMap(distancia, tipo)
+                    }
+                    .setNegativeButton(R.string.removerFiltro) { dialog, id ->
+                        // Dismiss the dialog
+                        distancia = 0
+                        populateMap(distancia, tipo)
+                    }
+            builder.show()
+        }
+    }
+
+    private fun filtrarDistancia(distancia: Int): MutableList<Report> {
+        Toast.makeText(requireContext(), distancia.toString(), Toast.LENGTH_SHORT).show()
+        val reportsInserir = emptyList<Report>().toMutableList()
+        for(report in reports){
+            val distToReport = calculateDistance(lastLocation.latitude, lastLocation.longitude, report.latitude.toDouble(), report.longitude.toDouble())
+            if ( distToReport <= distancia.toFloat() ) {
+                reportsInserir += report //= report
+            }
+        }
+        for(report in reportsInserir){
+            Log.d("******* SMARTCITY *****", report.title)
+        }
+        return reportsInserir
+    }
+
+    private fun populateMap(distancia: Int, tipo: Int) {
+        map.clear()
+        if (distancia == 0) {
+            // insere por tipo
+            for (report in reports) {
+                val marker: Marker
+                val positionR: LatLng = LatLng(report.latitude.toDouble(),
+                        report.longitude.toDouble())
+                if (tipo == 0) {
+                    //insere todos
+                    // se report for do user logado, marker azul
+                    if ( userId == report.user_id.toInt()) {
+                        marker = map.addMarker(
+                                MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                        .position(positionR)
+                                        .title(report.title)
+                                        .snippet(report.user_id))
+                    }
+                    // se report for obras, marker laranja
+                    else if (report.type_id.toInt() == 2) {
+                        marker = map.addMarker(
+                                MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                        .position(positionR)
+                                        .title(report.title)
+                                        .snippet(report.user_id))
+                    } else {
+                        marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
+                    }
+                    marker.tag = report
+                }
+                else if (tipo == 1) {
+                    //insere acidentes
+                    // se report for do user logado, marker azul
+                    if (report.type_id.toInt() == 1){
+                        if( userId == report.user_id.toInt() ){
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        } else {
+                            marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
+                        }
+                        marker.tag = report
+                    }
+                }
+                else if (tipo == 2) {
+                    //insere obras
+                    // se report for do user logado, marker azul
+                    if (report.type_id.toInt() == 2) {
+                        if (userId == report.user_id.toInt()) {
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        } else {
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        }
+                        marker.tag = report
+                    }
+                }
+            }
+        }
+        else {
+            map.addCircle(CircleOptions()
+                    .center(LatLng(lastLocation.latitude, lastLocation.longitude))
+                    .radius(distancia.toDouble()) )
+
+            val reportsDentroDistancia = filtrarDistancia(distancia)
+
+            for(report in reportsDentroDistancia) {
+
+                val marker: Marker
+                val positionR: LatLng = LatLng(report.latitude.toDouble(),
+                        report.longitude.toDouble())
+                if (tipo == 0) {
+                    //insere todos os tipos
+                    // se report for do user logado, marker azul
+                    if ( userId == report.user_id.toInt()) {
+                        marker = map.addMarker(
+                                MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                        .position(positionR)
+                                        .title(report.title)
+                                        .snippet(report.user_id))
+                    }
+                    // se report for obras, marker laranja
+                    else if (report.type_id.toInt() == 2) {
+                        marker = map.addMarker(
+                                MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                        .position(positionR)
+                                        .title(report.title)
+                                        .snippet(report.user_id))
+                    } else {
+                        marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
+                    }
+                    marker.tag = report
+                }
+                else if (tipo == 1) {
+                    //insere acidentes
+                    // se report for do user logado, marker azul
+                    if (report.type_id.toInt() == 1){
+                        if( userId == report.user_id.toInt() ){
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        } else {
+                            marker = map.addMarker(MarkerOptions().position(positionR).title(report.title).snippet(report.user_id))
+                        }
+                        marker.tag = report
+                    }
+                }
+                else if (tipo == 2) {
+                    //insere obras
+                    // se report for do user logado, marker azul
+                    if (report.type_id.toInt() == 2) {
+                        if (userId == report.user_id.toInt()) {
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        } else {
+                            marker = map.addMarker(
+                                    MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                            .position(positionR)
+                                            .title(report.title)
+                                            .snippet(report.user_id))
+                        }
+                        marker.tag = report
+                    }
+                }
+            }
+        }
+
+
+        /*var positionR: LatLng
+        var marker: Marker
+        for(report in reportsDentroDistancia){
+            val distToReport = calculateDistance(lastLocation.latitude, lastLocation.longitude, report.latitude.toDouble(), report.longitude.toDouble())
+            if ( distToReport <= distancia.toFloat() ) {
+                positionR = LatLng(
+                        report.latitude.toDouble(),
+                        report.longitude.toDouble()
+                )
+                // se report for do user logado, marker azul
+                if (userId == report.user_id.toInt()) {
+                    marker = map.addMarker(
+                            MarkerOptions()
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                    .position(positionR)
+                                    .title(report.title)
+                                    .snippet(report.user_id)
+                    )
+                }
+                // se report for obras, marker laranja
+                else if (report.type_id.toInt() == 2) {
+                    marker = map.addMarker(
+                            MarkerOptions()
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                    .position(positionR)
+                                    .title(report.title)
+                                    .snippet(report.user_id)
+                    )
+                } else {
+                    marker = map.addMarker(
+                            MarkerOptions().position(positionR).title(report.title)
+                                    .snippet(report.user_id)
+                    )
+                }
+                marker.tag = report
+            }
+        }*/
+    }
+
+    private fun calculateDistance(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Float {
+        val results = FloatArray(1)
+        Location.distanceBetween(latitude1, longitude1, latitude2, longitude2, results)
+        return results[0]
     }
 
     override fun onPause() {

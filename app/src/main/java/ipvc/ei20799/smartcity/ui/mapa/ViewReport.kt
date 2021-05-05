@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.view.MotionEvent
+import androidx.appcompat.app.AppCompatDelegate
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.dataclasses.Report
 import kotlinx.android.synthetic.main.activity_new_report.*
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_view_report.*
 
 class ViewReport : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_report)
 

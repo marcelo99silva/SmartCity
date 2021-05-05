@@ -2,25 +2,24 @@ package ipvc.ei20799.smartcity.ui.mapa
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity.apply
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,23 +32,18 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.*
 import ipvc.ei20799.smartcity.R
-import ipvc.ei20799.smartcity.activities.MainActivity
-import ipvc.ei20799.smartcity.adapter.CustomInfoWindowAdapter
 import ipvc.ei20799.smartcity.api.EndPoints
 import ipvc.ei20799.smartcity.api.ServiceBuilder
-import ipvc.ei20799.smartcity.dataclasses.LoginResponse
 import ipvc.ei20799.smartcity.dataclasses.Report
 import ipvc.ei20799.smartcity.storage.SharedPrefManager
-import ipvc.ei20799.smartcity.ui.notas.NovaNota
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
-import java.math.BigDecimal
 
-class MapsFragment : Fragment() {
+class MapsFragment : Fragment(), SensorEventListener {
     private var userId: Int = 0
     private lateinit var reports: List<Report>
     private lateinit var map: GoogleMap
@@ -62,6 +56,10 @@ class MapsFragment : Fragment() {
     var first: Boolean = true
     var distancia: Int = 0
     var tipo: Int = 0
+    private lateinit var sensorManager: SensorManager
+    private var sensorBrightness: Sensor? = null
+    private var sensorTempAmbiente: Sensor? = null
+    var naoAvisou: Boolean = true
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -230,6 +228,43 @@ class MapsFragment : Fragment() {
                     }
             builder.show()
         }
+        setupSensors()
+    }
+
+    private fun setupSensors() {
+        sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorBrightness = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        sensorTempAmbiente = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+    }
+
+    override fun onSensorChanged(p0: SensorEvent?) {
+        if (p0 != null) {
+            if (p0.sensor.type == Sensor.TYPE_LIGHT && this::map.isInitialized) {
+                if (p0.values[0] <= 10) {
+                    map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_night_style))
+                } else {
+                    map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_default_style))
+                }
+            }
+            else if (p0.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                if (p0.values[0] > 30 && naoAvisou){
+                    naoAvisou = false
+                    // aviso temperatura elevada
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(R.string.avisoTempTitle)
+                            .setMessage(R.string.avisoTempMsg)
+                            .setIcon(R.drawable.ic_sun_umbrella_hot)
+                            .setPositiveButton(R.string.ok) { dialog, id ->
+                            }
+                    val alert = builder.create()
+                    alert.show()
+                }
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        return
     }
 
     private fun filtrarDistancia(distancia: Int): MutableList<Report> {
@@ -406,18 +441,16 @@ class MapsFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        sensorManager.unregisterListener(this)
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
-        /*if (!first) {
-            map.clear()
-        }
         loadReports()
-        radiosFiltros.check(radioButton1.id)*/
-        loadReports()
+        sensorManager.registerListener(this, sensorBrightness, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this, sensorTempAmbiente, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     private fun startLocationUpdates() {

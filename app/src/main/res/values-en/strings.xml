@@ -45,4 +45,6 @@
         <item>Accident</item>
         <item>Roadwork</item>
     </string-array>
+    <string name="avisoTempTitle">High ambient temperature!</string>
+    <string name="avisoTempMsg">Avoid direct sun exposure, use sunscreen and stay hidrated.</string>
 </resources>

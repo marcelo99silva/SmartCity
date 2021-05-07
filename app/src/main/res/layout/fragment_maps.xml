@@ -13,16 +13,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newReport"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/layoutFiltros"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/map"
-        android:src="@drawable/ic_marker_foreground"
-        app:maxImageSize="110dp"
-        app:fabCustomSize="45dp"/>
+        app:layout_constraintStart_toStartOf="@+id/map" >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/newReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map_marker"
+            app:maxImageSize="40dp"
+            app:fabCustomSize="45dp"
+            android:layout_marginEnd="5dp"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/newRadius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map_radius"
+            app:maxImageSize="40dp"
+            app:fabCustomSize="45dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutFiltros"

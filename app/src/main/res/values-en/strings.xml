@@ -47,4 +47,8 @@
     </string-array>
     <string name="avisoTempTitle">High ambient temperature!</string>
     <string name="avisoTempMsg">Avoid direct sun exposure, use sunscreen and stay hidrated.</string>
+    <string name="logout">Logout</string>
+    <string name="options">Options</string>
+    <string name="notificationCheckbox">Receive notifications</string>
+    <string name="criarGeofence">Create geofence</string>
 </resources>

@@ -5,6 +5,21 @@ import ipvc.ei20799.smartcity.dataclasses.User
 
 class SharedPrefManager private constructor(private val mCtx: Context) {
 
+    val notificationSetting: Boolean
+        get() {
+            val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return sharedPreferences.getBoolean("notificationSetting", false)
+        }
+
+    fun saveNotificationSetting(bool: Boolean){
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putBoolean("notificationSetting", bool)
+
+        editor.apply()
+    }
+
     val isLoggedIn: Boolean
         get() {
             val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)

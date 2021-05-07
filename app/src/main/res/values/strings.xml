@@ -44,6 +44,10 @@
     <string name="avisoTempTitle">Temperatura ambiente elevada!</string>
     <string name="avisoTempMsg">Evite exposição solar direta, utilize protetor solar e mantenha-se hidratado.</string>
     <string name="ok" translatable="false">Ok</string>
+    <string name="logout">Terminar sessão</string>
+    <string name="options">Opções</string>
+    <string name="notificationCheckbox">Receber notificações</string>
+    <string name="criarGeofence">Criar geofence</string>
     <string-array name="tipos">
         <item>Acidente</item>
         <item>Obras</item>

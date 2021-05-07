@@ -2,6 +2,7 @@ package ipvc.ei20799.smartcity.ui.mapa
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.*
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.api.EndPoints
 import ipvc.ei20799.smartcity.api.ServiceBuilder
+import ipvc.ei20799.smartcity.dataclasses.GeofenceBroadcastReceiver
 import ipvc.ei20799.smartcity.dataclasses.Report
 import ipvc.ei20799.smartcity.storage.SharedPrefManager
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -60,6 +62,9 @@ class MapsFragment : Fragment(), SensorEventListener {
     private var sensorBrightness: Sensor? = null
     private var sensorTempAmbiente: Sensor? = null
     var naoAvisou: Boolean = true
+    // parte geofence
+    private lateinit var geofencingClient: GeofencingClient
+    private var geofenceList: MutableList<Geofence> = emptyList<Geofence>().toMutableList()
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -153,6 +158,7 @@ class MapsFragment : Fragment(), SensorEventListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
+        geofencingClient = LocationServices.getGeofencingClient(requireContext())
         // initialize fusedLocationClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
         // added to implement location periodic updates
@@ -180,6 +186,25 @@ class MapsFragment : Fragment(), SensorEventListener {
             startActivity(intent)
         }
 
+        newRadius.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.alert_dialog_distancia, null)
+            val numberPicker  = dialogLayout.findViewById<NumberPicker>(R.id.numberPickerDistancia)
+            var raio: Int = 0
+            numberPicker.minValue = 0
+            numberPicker.maxValue = 500
+            numberPicker.wrapSelectorWheel = true
+            numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+                raio = newVal
+            }
+            builder.setMessage(R.string.criarGeofence)
+                    .setView(dialogLayout)
+                    .setPositiveButton(R.string.apply) { dialog, i ->
+                        createRadius(raio)
+                    }
+            builder.show()
+        }
 
         radiosFiltros.setOnCheckedChangeListener{ radioGroup, optionId ->
             run {
@@ -463,4 +488,44 @@ class MapsFragment : Fragment(), SensorEventListener {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
+
+    private fun createRadius(raio: Int) {
+        geofenceList.add(Geofence.Builder()
+                // Set the request ID of the geofence. This is a string to identify this
+                // geofence.
+                .setRequestId((geofenceList.size+1).toString())
+                // Set the circular region of this geofence.
+                .setCircularRegion(
+                        lastLocation.latitude,
+                        lastLocation.longitude,
+                        raio.toFloat()
+                )
+                // Set the expiration duration of the geofence. This geofence gets automatically
+                // removed after this period of time.
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                // Set the transition types of interest. Alerts are only generated for these
+                // transition. We track entry and exit transitions in this sample.
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+                // Create the geofence.
+                .build()
+        )
+        map.addCircle(CircleOptions()
+                .center(LatLng(lastLocation.latitude, lastLocation.longitude))
+                .radius(raio.toDouble()))
+        getGeofencingRequest()
+    }
+
+    private fun getGeofencingRequest(): GeofencingRequest {
+        return GeofencingRequest.Builder().apply {
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            addGeofences(geofenceList)
+        }.build()
+    }
+
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+        // addGeofences() and removeGeofences().
+        PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 }

@@ -1,5 +1,6 @@
 package ipvc.ei20799.smartcity.ui.conta
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,23 +10,32 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ipvc.ei20799.smartcity.R
+import ipvc.ei20799.smartcity.activities.MainActivity
+import ipvc.ei20799.smartcity.activities.MainActivityLogin
+import ipvc.ei20799.smartcity.storage.SharedPrefManager
+import kotlinx.android.synthetic.main.fragment_conta.view.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class ContaFragment : Fragment() {
-
-    private lateinit var contaViewModel: ContaViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        contaViewModel =
-                ViewModelProvider(this).get(ContaViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_conta, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        contaViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
+        root.logoutBt.setOnClickListener{
+            SharedPrefManager.getInstance(requireContext()).clear()
+
+            val intent = Intent(requireContext(), MainActivityLogin::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
+        }
+
         return root
     }
 }

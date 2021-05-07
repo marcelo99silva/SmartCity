@@ -12,4 +12,40 @@
     <string name="confirmationDelete">De certeza que pretende Eliminar?</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="title_login">Login</string>
+    <string name="loginMsg">Faça login para ter acesso ao resto da aplicação.</string>
+    <string name="title_activity_main_login">MainActivityLogin</string>
+    <string name="login_error">Credenciais erradas.</string>
+    <string name="loginCheckbox">Manter sessão iniciada</string>
+    <string name="title_maps">Mapa</string>
+    <string name="newReport">Reportar situação</string>
+    <string name="onlyWork">Mostrar só obras</string>
+    <string name="criarReportTitle">Reportar situação</string>
+    <string name="tipoReport">Tipo situação:</string>
+
+    <string name="deleteReport">Situação apagada.</string>
+    <string name="createdReport">Situação reportada.</string>
+    <string name="tirarFoto">Câmera</string>
+    <string name="escolherFoto">Galeria</string>
+    <string name="erro">Ocorreu um erro.</string>
+    <string name="noPermission">Permissão não concedida.</string>
+    <string name="tipoTodos">Todos</string>
+    <string name="tipoAcidentes">Acidentes</string>
+    <string name="tipoObras">Obras</string>
+    <string name="saberMais">Ver mais</string>
+    <string name="ReportTitle">Situação</string>
+    <string name="loading">A carregar...</string>
+    <string name="updatedReport">Situação atualizada.</string>
+    <string name="distancia">Distância em metros</string>
+    <string name="distanciaSo">Distância</string>
+    <string name="filtroDistancia">Filtrar situações por distância</string>
+    <string name="removerFiltro">Remover filtro</string>
+    <string name="apply">Aplicar</string>
+    <string name="avisoTempTitle">Temperatura ambiente elevada!</string>
+    <string name="avisoTempMsg">Evite exposição solar direta, utilize protetor solar e mantenha-se hidratado.</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string-array name="tipos">
+        <item>Acidente</item>
+        <item>Obras</item>
+    </string-array>
 </resources>

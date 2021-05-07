@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mapa.NewReport"
+    android:layout_marginVertical="20sp"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20sp" >
+            <TextView
+                android:id="@+id/newReportTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/criarReportTitle"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="10sp"/>
+
+            <EditText
+                android:id="@+id/EditTextTituloReport"
+                android:textSize="20sp"
+                android:layout_below="@+id/newReportTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/EditText_title"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/TextTipoReport"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tipoReport"
+                android:layout_below="@id/EditTextTituloReport"
+                android:layout_marginVertical="5sp"/>
+
+            <Spinner
+                android:id="@+id/SpinnerNewReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TextTipoReport"/>
+
+            <EditText
+                android:background="@null"
+                android:id="@+id/EditTextDescricaoReport"
+                android:layout_width="match_parent"
+                android:layout_height="180sp"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:hint="@string/EditText_body"
+                android:layout_marginVertical="10sp"
+                android:layout_below="@+id/SpinnerNewReport"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/EditTextDescricaoReport">
+                <ImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="180sp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginHorizontal="50sp"
+                    app:srcCompat="@drawable/ic_baseline_insert_photo_24" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivImage"
+                    android:layout_centerHorizontal="true">
+                    <Button
+                        android:id="@+id/bTirarFoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5sp"
+                        android:text="@string/tirarFoto" />
+                    <Button
+                        android:id="@+id/bEscolherFoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5sp"
+                        android:text="@string/escolherFoto" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_marginHorizontal="20sp" >
+        <ImageButton
+            android:id="@+id/newReportSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_save_black_36dp"/>
+        <TextView
+            android:id="@+id/newReportDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="dd/mm/aaa hh:mm"
+            android:textSize="20sp"/>
+        <ImageButton
+            android:id="@+id/newReportDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_delete_black_36dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

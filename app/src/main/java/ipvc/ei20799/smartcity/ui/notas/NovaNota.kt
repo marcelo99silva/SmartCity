@@ -9,6 +9,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContentProviderCompat.requireContext
 import ipvc.ei20799.smartcity.R
 import ipvc.ei20799.smartcity.dataclasses.Nota
@@ -18,6 +19,7 @@ import java.util.*
 
 class NovaNota : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nova_nota)
 
